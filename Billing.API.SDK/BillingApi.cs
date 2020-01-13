@@ -26,9 +26,9 @@ namespace Billing.API.SDK
             }
         }
 
-        public Task<GetReportByMonthResponse[]> GetReportByMonth(GetReportByMonthRequest request)
+        public Task<GetReportByMonthResponse> GetReportByMonth(GetReportByMonthRequest request)
         {
-            return SendAsync<GetReportByMonthResponse[]>(request);
+            return SendAsync<GetReportByMonthResponse>(request);
         }
 
         #region generic api methods

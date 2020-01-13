@@ -4,6 +4,6 @@ namespace Billing.API.SDK
 {
     public interface IBillingApi
     {
-        Task<GetReportByMonthResponse[]> GetReportByMonth(GetReportByMonthRequest request);
+        Task<GetReportByMonthResponse> GetReportByMonth(GetReportByMonthRequest request);
     }
 }

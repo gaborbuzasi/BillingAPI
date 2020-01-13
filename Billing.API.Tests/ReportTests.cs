@@ -1,5 +1,6 @@
 ﻿using Billing.API.SDK;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Threading.Tasks;
 
 namespace Billing.API.Tests
@@ -17,6 +18,9 @@ namespace Billing.API.Tests
             var report = await Api.GetReportByMonth(request);
 
             Assert.IsNotNull(report);
+            Assert.AreEqual(new DateTime(year, month, 1), report.StartDate);
+            Assert.AreEqual(new DateTime(year, month, DateTime.DaysInMonth(year, month)), report.EndDate);
+            Assert.AreEqual(subscriptionId, report.SubscriptionId);
         }
     }
 }

@@ -9,7 +9,6 @@ namespace Billing.API.SDK
 
         public string SubscriptionId { get; set; }
         public int TotalNumberOfRequests { get; set; }
-        public string ServiceType { get; set; }
-        public Money Cost { get; set; }
+        public Money TotalCost { get; set; }
     }
 }
