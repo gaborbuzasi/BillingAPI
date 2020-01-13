@@ -1,6 +1,7 @@
 ﻿using Billing.Common;
 using Microsoft.Extensions.Configuration;
 using RequestDataCollector.SDK;
+using System;
 using System.IO;
 
 namespace RequestDataCollector.Tests
@@ -16,7 +17,7 @@ namespace RequestDataCollector.Tests
             // will require environment detection to run on CI buildserver or other dev machine
             var configuration = new ConfigurationBuilder().AddUserSecrets<IntegrationTestBase>().Build();
 
-            settings.ApiKey = configuration["ApiKey"];
+            settings.ApiKey = configuration["ApiKey"] ?? Environment.GetEnvironmentVariable("ApiKey");
 
             RequestDataCollectorApi = new RequestDataCollectorApi(settings);
         }

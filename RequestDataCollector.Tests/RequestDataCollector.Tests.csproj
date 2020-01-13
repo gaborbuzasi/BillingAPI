@@ -23,6 +23,6 @@
     <PackageReference Include="coverlet.collector" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RequestDataCollector\RequestDataCollector.SDK.csproj" />
+    <ProjectReference Include="..\RequestDataCollector.SDK\RequestDataCollector.SDK.csproj" />
   </ItemGroup>
 </Project>

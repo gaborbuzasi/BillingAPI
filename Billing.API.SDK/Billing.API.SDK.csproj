@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Billing.Common\Billing.Common.csproj" />
-    <ProjectReference Include="..\RequestDataCollector\RequestDataCollector.SDK.csproj" />
+    <ProjectReference Include="..\RequestDataCollector.SDK\RequestDataCollector.SDK.csproj" />
   </ItemGroup>
 
 </Project>

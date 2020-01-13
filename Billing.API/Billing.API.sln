@@ -7,11 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Billing.API", "Billing.API.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integrations", "Integrations", "{D27B01CC-D56E-4006-8F2F-1F497C0F83C5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RequestDataCollector.SDK", "..\RequestDataCollector\RequestDataCollector.SDK.csproj", "{155B3A4A-36AB-4047-BCE7-F85D843299B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RequestDataCollector.SDK", "..\RequestDataCollector.SDK\RequestDataCollector.SDK.csproj", "{155B3A4A-36AB-4047-BCE7-F85D843299B7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Billing.Common", "..\Billing.Common\Billing.Common.csproj", "{AEE43873-BCAC-458A-B74F-3D5EA2128464}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RequestDataCollector", "RequestDataCollector", "{276653BF-E818-47C5-9BF7-94E1313BFD11}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RequestDataCollector", "RequestDataCollector.SDK", "{276653BF-E818-47C5-9BF7-94E1313BFD11}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RequestDataCollector.Tests", "..\RequestDataCollector.Tests\RequestDataCollector.Tests.csproj", "{5503E9AC-ED0B-4D33-AA51-619220CF7C4C}"
 EndProject

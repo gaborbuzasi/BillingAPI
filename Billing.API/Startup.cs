@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RequestDataCollector.SDK;
+using System;
 
 namespace Billing.API
 {
@@ -20,6 +21,11 @@ namespace Billing.API
 
             // ApiKey won't be populated for RequestDataCollector other than on dev's machine as it's stored in secret manager
             Settings = configuration.Get<BillingApiSettings>();
+
+            if (string.IsNullOrEmpty(Settings.RequestDataCollector?.ApiKey))
+            {
+                Settings.RequestDataCollector.ApiKey = Environment.GetEnvironmentVariable("ApiKey");
+            }
         }
 
         public IConfiguration Configuration { get; }
