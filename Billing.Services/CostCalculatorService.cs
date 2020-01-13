@@ -42,5 +42,23 @@ namespace Billing.Services
 
             return serviceCost;
         }
+
+        public Money CostPrediction(decimal existingCost, int year, int month)
+        {
+            var daysInCurrentMonth = DateTime.DaysInMonth(year, month);
+
+            var elapsedDays = DateTime.Now.Day;
+
+            // calculate proportion elapsed from month in terms of days
+            var remainingDaysInMonth = daysInCurrentMonth - elapsedDays;
+            var predictionFactor = (decimal)remainingDaysInMonth / elapsedDays;
+
+            return new Money
+            {
+                // predicted amount will be cost already incurred + projected usage based already incurred cost
+                Amount = Math.Round(existingCost + predictionFactor * existingCost, 2),
+                Currency = CurrencyIso.EUR
+            };
+        }
     }
 }

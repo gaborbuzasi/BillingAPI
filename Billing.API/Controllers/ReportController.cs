@@ -55,20 +55,10 @@ namespace Billing.API.Controllers
             };
 
             var isCurrentMonthReport = DateTime.Now.Date == new DateTime(request.Year, request.Month, DateTime.Now.Day);
-            var elapsedDays = DateTime.Now.Day;
 
             if (isCurrentMonthReport)
             {
-                // calculate proportion elapsed from month in terms of days
-                var remainingDaysInMonth = daysInCurrentMonth - elapsedDays;
-                var predictionFactor = (decimal)remainingDaysInMonth / elapsedDays;
-
-                result.EstimatedCost = new Money
-                {
-                    // predicted amount will be cost already incurred + projected usage based already incurred cost
-                    Amount = Math.Round(totalCost + predictionFactor * totalCost, 2),
-                    Currency = CurrencyIso.EUR
-                };
+                result.EstimatedCost = CostCalculatorService.CostPrediction(totalCost, request.Year, request.Month);
             }
 
             return result;
