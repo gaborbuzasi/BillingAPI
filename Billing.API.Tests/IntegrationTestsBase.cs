@@ -13,7 +13,8 @@ namespace Billing.API.Tests
         static IntegrationTestsBase()
         {
             var apiSettingsPath = "appsettings.json";
-
+            
+            // will require environment detection to run on CI buildserver or other dev machine (secrets)
             var apiConfiguration = new ConfigurationBuilder()
                                         .AddJsonFile(apiSettingsPath)
                                         .AddUserSecrets<Startup>()
@@ -23,7 +24,6 @@ namespace Billing.API.Tests
 
             var apiBuilder = new WebHostBuilder().UseConfiguration(apiConfiguration).UseStartup<Startup>();
 
-            
             ApiServer = new TestServer(apiBuilder);
 
             Api = new BillingApi(settings, ApiServer.CreateClient());

@@ -1,5 +1,4 @@
 using Billing.API.SDK;
-using RequestDataCollector.SDK;
 using Billing.Services;
 using Billing.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
@@ -7,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RequestDataCollector.SDK;
 
 namespace Billing.API
 {
@@ -18,12 +18,12 @@ namespace Billing.API
         {
             Configuration = configuration;
 
+            // ApiKey won't be populated for RequestDataCollector other than on dev's machine as it's stored in secret manager
             Settings = configuration.Get<BillingApiSettings>();
         }
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
@@ -34,7 +34,6 @@ namespace Billing.API
             services.AddSingleton<ICostCalculatorService, CostCalculatorService>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
