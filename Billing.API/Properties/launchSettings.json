@@ -12,7 +12,7 @@
     "BillingAPI": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
+      "launchUrl": "report/2aa535b2-836d-45df-8f8e-94abc05dedc5/2019/3",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

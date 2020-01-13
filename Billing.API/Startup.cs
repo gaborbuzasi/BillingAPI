@@ -32,7 +32,12 @@ namespace Billing.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                    .AddNewtonsoftJson(options =>
+                    {
+                        options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+                        options.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+                    });
 
             services.AddSingleton(Settings.RequestDataCollector);
             services.AddSingleton<IRequestDataCollectorApi, RequestDataCollectorApi>();

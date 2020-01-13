@@ -1,8 +1,8 @@
 ﻿using Billing.API.SDK;
 using Billing.Common;
-using RequestDataCollector.SDK;
 using Billing.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using RequestDataCollector.SDK;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,23 +34,42 @@ namespace Billing.API.Controllers
 
             var subscriptionData = apiResult.Requests.Where(req => req.SubscriptionId == request.SubscriptionId);
 
-            var serviceCallCounts = subscriptionData.GroupBy(req => req.ServiceName).ToDictionary(req => req.Key, req => req.Count());
+            var serviceCallCountsByType = subscriptionData.GroupBy(req => req.ServiceName).ToDictionary(req => req.Key, req => req.Count());
 
             var totalCost = 0m;
 
-            foreach (var serviceCallCount in serviceCallCounts)
+            foreach (var serviceCallCount in serviceCallCountsByType)
             {
                 totalCost += CostCalculatorService.CalculateServiceCost(serviceCallCount.Key, serviceCallCount.Value).Amount;
             }
 
+            var daysInCurrentMonth = DateTime.DaysInMonth(request.Year, request.Month);
+
             var result = new GetReportByMonthResponse
             {
                 StartDate = new DateTime(request.Year, request.Month, 1),
-                EndDate = new DateTime(request.Year, request.Month, DateTime.DaysInMonth(request.Year, request.Month)),
+                EndDate = new DateTime(request.Year, request.Month, daysInCurrentMonth),
                 SubscriptionId = request.SubscriptionId,
                 TotalCost = new Money { Currency = CurrencyIso.EUR, Amount = totalCost },
-                TotalNumberOfRequests = serviceCallCounts.Sum(scc => scc.Value)
+                TotalNumberOfRequests = serviceCallCountsByType.Sum(scc => scc.Value)
             };
+
+            var isCurrentMonthReport = DateTime.Now.Date == new DateTime(request.Year, request.Month, DateTime.Now.Day);
+            var elapsedDays = DateTime.Now.Day;
+
+            if (isCurrentMonthReport)
+            {
+                // calculate proportion elapsed from month in terms of days
+                var remainingDaysInMonth = daysInCurrentMonth - elapsedDays;
+                var predictionFactor = (decimal)remainingDaysInMonth / elapsedDays;
+
+                result.EstimatedCost = new Money
+                {
+                    // predicted amount will be cost already incurred + projected usage based already incurred cost
+                    Amount = Math.Round(totalCost + predictionFactor * totalCost, 2),
+                    Currency = CurrencyIso.EUR
+                };
+            }
 
             return result;
         }
